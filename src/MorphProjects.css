@@ -1,0 +1,283 @@
+
+/* THE ORIGINAL HOMEPAGE STYLES
+   REMAIN IN index.css */
+
+.morph-portfolio {
+  position: relative;
+  isolation: isolate;
+}
+
+.morph-portfolio .portfolio-hero {
+  position: relative;
+  z-index: 0;
+}
+
+.morph-portfolio .hero-content,
+.morph-portfolio .site-header,
+.morph-portfolio .site-footer {
+  z-index: 4;
+}
+
+/* IMMERSIVE PROJECT PAGE */
+
+.morph-projects {
+  position: relative;
+  z-index: 0;
+  min-height: 100svh;
+  width: 100%;
+  padding: 24px 5% 20px;
+  background:
+    radial-gradient(
+      ellipse at 78% 52%,
+      rgba(33, 72, 171, 0.18),
+      transparent 48%
+    ),
+    #03050d;
+  color: #ffffff;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 16px;
+}
+
+.morph-projects-header,
+.morph-projects-footer {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  color: #a1b0cc;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.morph-projects-body {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1500px;
+  min-height: 0;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(25px, 5vw, 85px);
+}
+
+/* PROJECT DETAILS */
+
+.morph-project-copy {
+  min-width: 0;
+}
+
+.morph-project-eyebrow {
+  margin: 0 0 16px;
+  color: #b8ff65;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.morph-project-copy h2 {
+  margin: 0;
+  font-size: clamp(42px, min(5vw, 8vh), 80px);
+  line-height: 0.97;
+  font-weight: 900;
+  letter-spacing: -0.075em;
+}
+
+.morph-project-copy h2 span {
+  color: #b8ff65;
+}
+
+.morph-project-lead {
+  max-width: 520px;
+  margin: 19px 0 0;
+  color: #e2e9f6;
+  font-size: clamp(15px, 1.3vw, 19px);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.morph-project-rule {
+  height: 1px;
+  margin: 20px 0;
+  background: #2d3953;
+}
+
+.morph-project-copy h3 {
+  margin: 15px 0 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.morph-project-description {
+  max-width: 540px;
+  margin: 0;
+  color: #aebdd5;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.morph-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.morph-project-tags span {
+  padding: 8px 12px;
+  border: 1px solid #334263;
+  border-radius: 30px;
+  color: #bed0ec;
+  font-size: 10px;
+  letter-spacing: 0.7px;
+}
+
+/* RIGHT SIDE: THE SAME 3D OBJECT
+   WILL TURN INTO PARTICLES HERE */
+
+.morph-project-visual {
+  position: relative;
+  min-width: 0;
+  height: clamp(280px, 52svh, 480px);
+  border: 1px solid rgba(91, 142, 236, 0.24);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(43, 92, 190, 0.13),
+      rgba(5, 13, 32, 0.04) 55%,
+      transparent 80%
+    );
+  pointer-events: none;
+}
+
+.morph-visual-top,
+.morph-visual-bottom {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #a6bfe8;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.morph-visual-top {
+  top: 20px;
+}
+
+.morph-visual-bottom {
+  bottom: 20px;
+}
+
+/* PROJECT FOOTER */
+
+.morph-projects-footer {
+  padding-top: 12px;
+  border-top: 1px solid #28344c;
+  min-height: 48px;
+}
+
+.morph-back-button {
+  padding: 12px 21px;
+  border: 1px solid #b8ff65;
+  border-radius: 50px;
+  background: rgba(4, 7, 15, 0.8);
+  color: #b8ff65;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+
+.morph-back-button:hover {
+  background: #b8ff65;
+  color: #080808;
+}
+
+.morph-back-button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+/* SHORT LAPTOP SCREENS */
+
+@media (max-height: 760px) and (min-width: 901px) {
+  .morph-projects {
+    gap: 10px;
+    padding-top: 15px;
+    padding-bottom: 13px;
+  }
+
+  .morph-project-copy h2 {
+    font-size: clamp(40px, 4vw, 62px);
+  }
+
+  .morph-project-visual {
+    height: clamp(230px, 44svh, 350px);
+  }
+
+  .morph-project-rule {
+    margin: 12px 0;
+  }
+
+  .morph-project-tags {
+    margin-top: 12px;
+  }
+}
+
+/* TABLET & MOBILE */
+
+@media (max-width: 900px) {
+  .morph-projects {
+    height: auto;
+    min-height: 100svh;
+    grid-template-rows: auto auto auto;
+    padding: 25px 6%;
+  }
+
+  .morph-projects-body {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 25px 0;
+  }
+
+  .morph-project-visual {
+    height: 340px;
+  }
+}
+
+@media (max-width: 600px) {
+  .morph-project-copy h2 {
+    font-size: clamp(42px, 11vw, 65px);
+  }
+
+  .morph-project-visual {
+    height: 290px;
+  }
+
+  .morph-projects-header,
+  .morph-projects-footer {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .morph-visual-top,
+  .morph-visual-bottom {
+    font-size: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .morph-back-button {
+    transition: none;
+  }
+}

@@ -1,0 +1,183 @@
+
+/* SEAMLESS CHROME-TO-PROJECT TRANSITION */
+/* Keeps existing homepage and project styling. */
+
+.dg-seamless-root {
+  position: relative;
+  background: #080808;
+  min-height: 100svh;
+  isolation: isolate;
+}
+
+/* The scene stays behind the original homepage.
+   During transitions, the React component
+   raises it temporarily above the content. */
+
+.dg-seamless-root > .chrome-scene {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dg-seamless-root > .portfolio-hero {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+}
+
+.dg-seamless-root .hero-content {
+  position: relative;
+  z-index: 4;
+}
+
+.dg-seamless-root .site-header,
+.dg-seamless-root .site-footer {
+  z-index: 5;
+}
+
+/* Project section sits above the normal scene.
+   During the transition the scene is lifted
+   over it, then becomes invisible at the end. */
+
+.dg-seamless-root .dg-work {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  padding-top: clamp(14px, 2.5vh, 28px);
+  padding-bottom: clamp(14px, 2.5vh, 28px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  overflow: visible;
+}
+
+.dg-seamless-root .dg-work-body {
+  min-height: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.dg-seamless-root .dg-work-copy h2 {
+  font-size: clamp(
+    40px,
+    min(5vw, 8vh),
+    78px
+  );
+}
+
+.dg-seamless-root .dg-work-divider {
+  margin: 16px 0;
+}
+
+.dg-seamless-root .dg-work-visual {
+  height: clamp(260px, 48svh, 455px);
+  overflow: hidden;
+}
+
+/* The existing Voice Assistant ball is the
+   exact landing position for our particles. */
+
+.dg-seamless-root .dg-work-orb {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transform: translateZ(0);
+}
+
+.dg-seamless-root .dg-work-orb-core {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  width: clamp(145px, 17vw, 210px);
+  height: auto;
+  aspect-ratio: 1;
+}
+
+.dg-seamless-root .dg-work-ring {
+  pointer-events: none;
+}
+
+/* Keep the waveform below the central ball. */
+
+.dg-seamless-root .dg-work-wave {
+  bottom: 11%;
+  z-index: 3;
+}
+
+/* The top and bottom controls remain visible. */
+
+.dg-seamless-root .dg-work-header,
+.dg-seamless-root .dg-work-footer {
+  z-index: 4;
+}
+
+.dg-seamless-root .dg-work-footer {
+  padding-top: 12px;
+  min-height: 46px;
+}
+
+/* On shorter laptops, shrink the content
+   instead of clipping the project footer. */
+
+@media (max-height: 760px) and (min-width: 901px) {
+  .dg-seamless-root .dg-work {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    gap: 8px;
+  }
+
+  .dg-seamless-root .dg-work-body {
+    padding: 5px 0;
+  }
+
+  .dg-seamless-root .dg-work-copy h2 {
+    font-size: clamp(38px, 4vw, 60px);
+  }
+
+  .dg-seamless-root .dg-work-lead {
+    margin-top: 12px;
+  }
+
+  .dg-seamless-root .dg-work-divider {
+    margin: 10px 0;
+  }
+
+  .dg-seamless-root .dg-work-tags {
+    margin-top: 12px;
+  }
+
+  .dg-seamless-root .dg-work-visual {
+    height: clamp(230px, 43svh, 350px);
+  }
+}
+
+/* On tablet and mobile, allow the project
+   presentation to scroll naturally. */
+
+@media (max-width: 900px) {
+  .dg-seamless-root .dg-work {
+    min-height: 100svh;
+    grid-template-rows: auto auto auto;
+    gap: 18px;
+  }
+
+  .dg-seamless-root .dg-work-body {
+    grid-template-columns: 1fr;
+    padding: 25px 0;
+    gap: 25px;
+  }
+
+  .dg-seamless-root .dg-work-visual {
+    height: 360px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dg-seamless-root .dg-work-visual {
+    height: 310px;
+  }
+
+  .dg-seamless-root .dg-work-orb-core {
+    width: 145px;
+  }
+}

@@ -1,0 +1,380 @@
+
+/* PARTICLE GLOBE PAGE TRANSITION */
+
+.dg-particle-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #03040b;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.dg-particle-transition canvas {
+  display: block;
+}
+
+.dg-transition-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 68% 50%,
+      rgba(31, 64, 178, 0.16),
+      transparent 52%
+    );
+}
+
+.dg-transition-caption {
+  position: absolute;
+  bottom: 6%;
+  left: 5%;
+  color: #9cbfff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+}
+
+.dg-transition-caption span {
+  color: #6378a7;
+}
+
+/* PROJECT PRESENTATION */
+
+.dg-work {
+  position: relative;
+  min-height: 100svh;
+  background: #03050b;
+  color: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(18px, 3vh, 30px) 5%;
+  scroll-margin-top: 0;
+}
+
+.dg-work::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 89% 48%,
+      rgba(37, 70, 190, 0.15),
+      transparent 45%
+    );
+}
+
+.dg-work-header,
+.dg-work-footer {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  color: #a2aec7;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+.dg-work-body {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(24px, 5vw, 75px);
+  align-items: center;
+  padding: 25px 0;
+}
+
+.dg-work-copy {
+  min-width: 0;
+}
+
+.dg-work-eyebrow {
+  color: #b8ff65;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin: 0 0 18px;
+}
+
+.dg-work-copy h2 {
+  margin: 0;
+  font-size: clamp(45px, 5.3vw, 82px);
+  font-weight: 900;
+  letter-spacing: -0.075em;
+  line-height: 0.96;
+}
+
+.dg-work-copy h2 span {
+  color: #b8ff65;
+}
+
+.dg-work-lead {
+  color: #e6ecf9;
+  font-size: clamp(15px, 1.35vw, 19px);
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 20px 0 0;
+}
+
+.dg-work-divider {
+  height: 1px;
+  margin: 22px 0;
+  background: #303b55;
+}
+
+.dg-work-copy h3 {
+  color: #ffffff;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin: 15px 0 8px;
+}
+
+.dg-work-copy p:not(.dg-work-eyebrow):not(.dg-work-lead) {
+  color: #b3bfd6;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.dg-work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.dg-work-tags span {
+  padding: 8px 12px;
+  border: 1px solid #374463;
+  border-radius: 30px;
+  color: #b5c7e8;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+}
+
+/* PROJECT VISUAL */
+
+.dg-work-visual {
+  position: relative;
+  height: clamp(290px, 53vh, 510px);
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #293e73;
+  border-radius: 16px;
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      #233e80,
+      #101b3b 47%,
+      #080e20 80%
+    );
+}
+
+.dg-work-visual-top,
+.dg-work-visual-bottom {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #c7d7f6;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.dg-work-visual-top {
+  top: 22px;
+}
+
+.dg-work-visual-bottom {
+  bottom: 22px;
+}
+
+.dg-work-orb {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.dg-work-orb-core {
+  position: relative;
+  z-index: 2;
+  width: clamp(145px, 17vw, 210px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 29% 25%,
+      #e8ffff,
+      #78d4ff 19%,
+      #566bd8 48%,
+      #131637 78%
+    );
+  box-shadow:
+    0 0 70px #4c97ff88,
+    inset -20px -20px 40px #030918;
+  animation: dg-work-float 4s ease-in-out infinite;
+}
+
+.dg-work-ring {
+  position: absolute;
+  width: clamp(220px, 26vw, 320px);
+  aspect-ratio: 1;
+  border: 1px solid #85bdff88;
+  border-radius: 50%;
+  box-shadow: 0 0 25px #448eff55;
+}
+
+.dg-work-ring-one {
+  animation: dg-work-ring-a 9s linear infinite;
+}
+
+.dg-work-ring-two {
+  animation: dg-work-ring-b 11s linear infinite;
+}
+
+.dg-work-wave {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 15%;
+  z-index: 3;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.dg-work-wave span {
+  width: 4px;
+  height: var(--height);
+  border-radius: 20px;
+  background: linear-gradient(#b9f7ff, #657bff);
+  box-shadow: 0 0 10px #67baff88;
+  animation: dg-work-wave 1.3s ease-in-out infinite alternate;
+  animation-delay: var(--delay);
+}
+
+/* BOTTOM NAVIGATION */
+
+.dg-work-footer {
+  padding-top: 15px;
+  border-top: 1px solid #2a3450;
+}
+
+.dg-work-footer button {
+  padding: 12px 22px;
+  border-radius: 100px;
+  border: 1px solid #b8ff65;
+  background: transparent;
+  color: #b8ff65;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.dg-work-footer button:hover {
+  background: #b8ff65;
+  color: #05070b;
+}
+
+@keyframes dg-work-float {
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes dg-work-ring-a {
+  from { transform: rotateX(68deg) rotateZ(0deg); }
+  to { transform: rotateX(68deg) rotateZ(360deg); }
+}
+
+@keyframes dg-work-ring-b {
+  from { transform: rotateY(68deg) rotateZ(0deg); }
+  to { transform: rotateY(68deg) rotateZ(-360deg); }
+}
+
+@keyframes dg-work-wave {
+  to { height: 10px; opacity: 0.55; }
+}
+
+/* SHORTER DESKTOP SCREENS */
+
+@media (max-height: 760px) and (min-width: 901px) {
+  .dg-work-copy h2 {
+    font-size: clamp(40px, 4vw, 62px);
+  }
+
+  .dg-work-visual {
+    height: clamp(260px, 45vh, 370px);
+  }
+
+  .dg-work-divider {
+    margin: 13px 0;
+  }
+
+  .dg-work-tags {
+    margin-top: 12px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+  .dg-work-body {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 35px 0;
+  }
+
+  .dg-work-visual {
+    height: 400px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dg-work {
+    padding: 25px 6%;
+  }
+
+  .dg-work-copy h2 {
+    font-size: clamp(42px, 11vw, 65px);
+  }
+
+  .dg-work-visual {
+    height: 320px;
+  }
+
+  .dg-work-orb-core {
+    width: 145px;
+  }
+
+  .dg-work-ring {
+    width: 220px;
+  }
+
+  .dg-work-header,
+  .dg-work-footer {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-work-orb-core,
+  .dg-work-ring,
+  .dg-work-wave span {
+    animation: none;
+  }
+}

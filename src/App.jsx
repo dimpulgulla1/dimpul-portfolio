@@ -6,20 +6,18 @@ import "./PortfolioProjects.css";
 import "./ReturnOverlay.css";
 
 export default function App() {
-  const heroRef = useRef(null);
   const projectRef = useRef(null);
   const projectBallRef = useRef(null);
   const timelineRef = useRef(null);
-
   const morphProgress = useRef({ value: 0 });
   const busyRef = useRef(false);
 
   const [mode, setMode] = useState("home");
 
-  const homeElements =
+  const homeContent =
     ".hero-content, .site-header, .site-footer";
 
-  const projectElements =
+  const projectContent =
     ".dg-work-header, .dg-work-copy, " +
     ".dg-work-visual-top, .dg-work-visual-bottom, " +
     ".dg-work-footer";
@@ -30,42 +28,40 @@ export default function App() {
     ).matches;
 
   useEffect(() => {
-    let context;
+    if (reducedMotion()) return;
 
-    if (!reducedMotion()) {
-      context = gsap.context(() => {
-        gsap.fromTo(
-          ".hero-title",
-          { opacity: 0, y: 60 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power3.out",
-          }
-        );
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        ".hero-title",
+        { opacity: 0, y: 45 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+        }
+      );
 
-        gsap.fromTo(
-          ".reveal-ui",
-          { opacity: 0, y: 15 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power3.out",
-          }
-        );
-      }, heroRef);
-    }
+      gsap.fromTo(
+        ".reveal-ui",
+        { opacity: 0, y: 12 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.07,
+          ease: "power3.out",
+        }
+      );
+    });
 
     return () => {
-      context?.revert();
+      context.revert();
       timelineRef.current?.kill();
     };
   }, []);
 
-  const stopPreviousAnimations = () => {
+  const stopAnimations = () => {
     timelineRef.current?.kill();
 
     gsap.killTweensOf([
@@ -77,6 +73,31 @@ export default function App() {
     ]);
   };
 
+  const finishProject = () => {
+    morphProgress.current.value = 1;
+
+    gsap.set(projectRef.current, {
+      autoAlpha: 1,
+    });
+
+    gsap.set(projectContent, {
+      opacity: 1,
+      clearProps: "transform",
+    });
+
+    gsap.set(".dg-work-orb", {
+      opacity: 1,
+    });
+
+    gsap.set(homeContent, {
+      opacity: 0,
+      clearProps: "transform",
+    });
+
+    busyRef.current = false;
+    setMode("project");
+  };
+
   const finishHome = () => {
     morphProgress.current.value = 0;
 
@@ -84,12 +105,12 @@ export default function App() {
       autoAlpha: 0,
     });
 
-    gsap.set(homeElements, {
+    gsap.set(homeContent, {
       opacity: 1,
       clearProps: "transform",
     });
 
-    gsap.set(projectElements, {
+    gsap.set(projectContent, {
       opacity: 1,
       clearProps: "transform",
     });
@@ -102,34 +123,13 @@ export default function App() {
     setMode("home");
   };
 
-  const finishProject = () => {
-    morphProgress.current.value = 1;
-
-    gsap.set(projectRef.current, {
-      autoAlpha: 1,
-    });
-
-    gsap.set(projectElements, {
-      opacity: 1,
-      clearProps: "transform",
-    });
-
-    gsap.set(".dg-work-orb", {
-      opacity: 1,
-    });
-
-    busyRef.current = false;
-    setMode("project");
-  };
-
   const viewMyWork = () => {
     if (busyRef.current) return;
 
     busyRef.current = true;
-    stopPreviousAnimations();
+    stopAnimations();
 
     if (reducedMotion()) {
-      gsap.set(homeElements, { opacity: 0 });
       finishProject();
       return;
     }
@@ -140,7 +140,7 @@ export default function App() {
       autoAlpha: 0,
     });
 
-    gsap.set(projectElements, {
+    gsap.set(projectContent, {
       opacity: 0,
       y: 12,
     });
@@ -155,86 +155,55 @@ export default function App() {
 
     timelineRef.current = tl;
 
-    // Hide text while the chrome begins dissolving.
-    tl.to(
-      homeElements,
-      {
-        opacity: 0,
-        duration: 0.35,
-        ease: "power2.inOut",
-      },
-      0
-    );
+    // Original forward transition.
+    tl.to(homeContent, {
+      opacity: 0,
+      duration: 0.35,
+      ease: "power2.inOut",
+    }, 0);
 
-    // Original spiral becomes particles.
-    tl.to(
-      morphProgress.current,
-      {
-        value: 0.65,
-        duration: 0.85,
-        ease: "power2.inOut",
-      },
-      0.05
-    );
+    tl.to(morphProgress.current, {
+      value: 0.65,
+      duration: 0.85,
+      ease: "power2.inOut",
+    }, 0.05);
 
-    // Reveal project section without scrolling.
-    tl.set(
-      projectRef.current,
-      { visibility: "visible" },
-      0.48
-    );
+    tl.set(projectRef.current, {
+      visibility: "visible",
+    }, 0.48);
 
-    tl.to(
-      projectRef.current,
-      {
-        opacity: 1,
-        duration: 0.55,
-        ease: "power2.inOut",
-      },
-      0.48
-    );
+    tl.to(projectRef.current, {
+      opacity: 1,
+      duration: 0.55,
+      ease: "power2.inOut",
+    }, 0.48);
 
-    // Move particles toward the Voice Assistant ball.
-    tl.to(
-      morphProgress.current,
-      {
-        value: 1,
-        duration: 0.82,
-        ease: "power2.inOut",
-      },
-      0.88
-    );
+    tl.to(morphProgress.current, {
+      value: 1,
+      duration: 0.82,
+      ease: "power2.inOut",
+    }, 0.88);
 
-    // Project ball appears.
-    tl.to(
-      ".dg-work-orb",
-      {
-        opacity: 1,
-        duration: 0.48,
-        ease: "power2.inOut",
-      },
-      1.19
-    );
+    tl.to(".dg-work-orb", {
+      opacity: 1,
+      duration: 0.48,
+      ease: "power2.inOut",
+    }, 1.19);
 
-    // Project information fades into view.
-    tl.to(
-      projectElements,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.48,
-        stagger: 0.025,
-        ease: "power2.out",
-      },
-      1.05
-    );
+    tl.to(projectContent, {
+      opacity: 1,
+      y: 0,
+      duration: 0.48,
+      stagger: 0.025,
+      ease: "power2.out",
+    }, 1.05);
   };
 
   const backToHome = () => {
     if (busyRef.current) return;
 
     busyRef.current = true;
-    stopPreviousAnimations();
+    stopAnimations();
 
     if (reducedMotion()) {
       finishHome();
@@ -243,9 +212,9 @@ export default function App() {
 
     setMode("exit");
 
-    // Keep homepage content hidden at the start.
-    // Its layer will remain ABOVE the sculpture.
-    gsap.set(homeElements, {
+    // Keep the entire homepage text hidden
+    // until the sculpture is nearly restored.
+    gsap.set(homeContent, {
       opacity: 0,
     });
 
@@ -255,130 +224,111 @@ export default function App() {
 
     timelineRef.current = tl;
 
-    // Project ball dissolves.
-    tl.to(
-      ".dg-work-orb",
-      {
-        opacity: 0,
-        duration: 0.35,
-        ease: "power2.inOut",
-      },
-      0
-    );
+    // 1. Project ball becomes particles.
+    tl.to(".dg-work-orb", {
+      opacity: 0,
+      duration: 0.35,
+      ease: "power2.inOut",
+    }, 0);
 
-    // Project text fades.
-    tl.to(
-      projectElements,
-      {
-        opacity: 0,
-        y: 10,
-        duration: 0.32,
-        ease: "power2.inOut",
-      },
-      0
-    );
+    tl.to(projectContent, {
+      opacity: 0,
+      y: 8,
+      duration: 0.35,
+      ease: "power2.inOut",
+    }, 0);
 
-    // Reverse the particle transformation.
-    tl.to(
-      morphProgress.current,
-      {
-        value: 0.75,
-        duration: 0.45,
-        ease: "power2.inOut",
-      },
-      0.05
-    );
+    // 2. Particles return toward the center.
+    tl.to(morphProgress.current, {
+      value: 0.7,
+      duration: 0.5,
+      ease: "power2.inOut",
+    }, 0.05);
 
-    // Project background disappears gradually.
-    tl.to(
-      projectRef.current,
-      {
-        opacity: 0,
-        duration: 0.65,
-        ease: "power2.inOut",
-      },
-      0.3
-    );
+    // 3. Remove project layer gradually.
+    tl.to(projectRef.current, {
+      opacity: 0,
+      duration: 0.65,
+      ease: "power2.inOut",
+    }, 0.3);
 
-    // Move particles back to the original center.
-    tl.to(
-      morphProgress.current,
-      {
-        value: 0.3,
-        duration: 0.75,
-        ease: "power2.inOut",
-      },
-      0.4
-    );
+    tl.to(morphProgress.current, {
+      value: 0.3,
+      duration: 0.7,
+      ease: "power2.inOut",
+    }, 0.5);
 
-    tl.set(
-      projectRef.current,
-      {
-        visibility: "hidden",
-      },
-      1.02
-    );
+    tl.set(projectRef.current, {
+      visibility: "hidden",
+    }, 1.04);
 
-    // Complete the original chrome spiral.
-    tl.to(
-      morphProgress.current,
-      {
-        value: 0,
-        duration: 0.55,
-        ease: "power3.out",
-      },
-      1.1
-    );
+    // 4. Finish reassembling the chrome spiral.
+    tl.to(morphProgress.current, {
+      value: 0,
+      duration: 0.55,
+      ease: "power3.out",
+    }, 1.1);
 
-    // Reveal the name while the spiral reforms.
-    // The text remains ABOVE the 3D object.
+    // 5. Fade the name in over the sculpture.
+    // No transform on the parent hero container.
     tl.fromTo(
-      ".hero-content",
+      ".hero-title",
       {
         opacity: 0,
-        y: 12,
+        y: 18,
       },
       {
         opacity: 1,
         y: 0,
-        duration: 0.65,
+        duration: 0.62,
         ease: "power3.out",
         immediateRender: false,
       },
-      1.05
+      1.45
     );
 
-    // Navigation and footer return smoothly.
+    // 6. Bring back the surrounding hero content.
+    tl.to(
+      ".welcome-text, .hero-description, .connect-button",
+      {
+        opacity: 1,
+        duration: 0.5,
+        ease: "power2.out",
+      },
+      1.53
+    );
+
     tl.to(
       ".site-header, .site-footer",
       {
         opacity: 1,
-        duration: 0.55,
+        duration: 0.48,
         ease: "power2.out",
       },
-      1.15
+      1.58
     );
+
+    // The heading is now fully visible before
+    // the scene returns to its normal home state.
   };
 
   return (
     <div className="dg-seamless-root">
-      {/* ONE SHARED 3D SCULPTURE */}
       <ChromeScene
         morphProgress={morphProgress}
         targetRef={projectBallRef}
         mode={mode}
       />
 
-      {/* HOMEPAGE */}
+      {/* ORIGINAL HOMEPAGE */}
       <main
-        ref={heroRef}
         id="hero"
         className="portfolio-hero"
         style={{
-          // Critical fix:
-          // During return, homepage content sits
-          // above the transitioning 3D sculpture.
-          zIndex: mode === "exit" ? 40 : 1,
+          zIndex:
+            mode === "enter" || mode === "exit"
+              ? 40
+              : 1,
           background: "transparent",
         }}
       >
@@ -432,7 +382,7 @@ export default function App() {
         </footer>
       </main>
 
-      {/* AI VOICE ASSISTANT PROJECT */}
+      {/* PROJECT PRESENTATION */}
       <section
         ref={projectRef}
         id="projects"
